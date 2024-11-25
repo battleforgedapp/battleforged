@@ -22,7 +22,7 @@ const NavigationDrawer = ({ children, navId = "my-drawer-3" } : Readonly<{ child
                 {/* Main content here -- this comes from the dashboard layout tsx file and will display the header, etc */}
                 {children}
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side z-50">
                 <label htmlFor={navId} aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu bg-base-200 min-h-full w-80 p-4">
                     {/* Sidebar content here */}

@@ -2,7 +2,7 @@ import HeaderProfileDisplay from "@/components/layout/dashboard/HeaderProfileDis
 
 const Header = ({ navId } : Readonly<{ navId: string }>) => {
     return (
-        <header className="navbar">
+        <header className="navbar sticky top-0 z-40 duration-500 ease-in transition-colors bg-base-100">
             <div className="flex-none">
                 <label htmlFor={navId} aria-label="open sidebar" className="btn btn-square btn-ghost">
                     <svg

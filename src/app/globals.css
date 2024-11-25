@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*:root {*/
+/*    --image-url: '';*/
+/*}*/
+
+/*.faction-card-banner {*/
+/*    background-image:*/
+/*        linear-gradient(*/
+/*                rgba(0, 0, 0, 0.5),*/
+/*                rgba(0, 0, 0, 0.5)*/
+/*        ),*/
+/*        url(var(--image-url));*/
+
+/*    background-size: cover;*/
+/*    background-position: top;*/
+/*    background-repeat: no-repeat;*/
+/*}*/

@@ -1,6 +1,11 @@
 "use client";
+
+import _ from "lodash";
 import React from "react";
-import Link from "next/link";
+import GridCard from "@/components/layout/grids/GridCard";
+import GenericCardGrid from "@/components/layout/grids/GenericCardGrid";
+import NoResultsMessage from "@/components/messages/NoResultsMessage";
+import Section from "@/components/layout/sections/Section";
 import { Faction } from "@/types/faction.type";
 
 /**
@@ -10,19 +15,24 @@ import { Faction } from "@/types/faction.type";
  */
 export const FactionCardGrid = ({ factions } : Readonly<{ factions: Faction[] | null }>) => {
     if (!factions || factions.length === 0) {
-        return (
-            <section id="no-results">
-                <p>There are no results available.</p>
-            </section>
-        );
+        return <NoResultsMessage />
     }
 
     return (
-        <section id="factions" className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {factions.map(el => <FactionCard key={el.id} data={el} />)}
-        </section>
+        <GenericCardGrid>
+            {_.orderBy(factions, ['name'], ['asc']).map(el => <FactionCard key={el.id} data={el} />)}
+        </GenericCardGrid>
     );
 };
+
+/**
+ * Component to display a grid of faction cards with a section to include padding around the main section
+ */
+export const FactionCardGridSection = ({ factions } : Readonly<{ factions: Faction[] | null }>) => (
+    <Section>
+        <FactionCardGrid factions={factions} />
+    </Section>
+);
 
 /**
  * Component that displays the base faction information as a card. This is a basic name, image and clickable display
@@ -30,12 +40,10 @@ export const FactionCardGrid = ({ factions } : Readonly<{ factions: Faction[] | 
  */
 const FactionCard = ({ data } : Readonly<{ data: Faction }>) => {
     return (
-        <Link
-            href={`/factions/${data.id}`}
-            className="flex flex-row border px-2 py-3 cursor-pointer bg-secondary text-secondary-content"
-        >
-            <span className="flex-1 font-bold uppercase">{data.name}</span>
-        </Link>
+        <GridCard href={`/factions/${data.id}`} className="h-24" image={data?.image}>
+            <h2 className="font-bold uppercase">{data.name}</h2>
+            <p className="text-sm">{data.category?.name ?? 'Unknown Allegiance'}</p>
+        </GridCard>
     );
 };
 

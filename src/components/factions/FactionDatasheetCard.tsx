@@ -1,52 +1,46 @@
 "use client";
+
+import _ from "lodash";
 import React from "react";
+import GridCard from "@/components/layout/grids/GridCard";
+import GenericCardGrid from "@/components/layout/grids/GenericCardGrid";
+import NoResultsMessage from "@/components/messages/NoResultsMessage";
+import Section from "@/components/layout/sections/Section";
+import SectionTitle from "@/components/layout/sections/SectionTitle";
 import useFactionDatasheetStats from "@/hooks/useFactionDatasheetStatsContext";
 import FactionDatasheetStatsModal from "@/components/factions/FactionDatasheetStatsModal";
-import { DefArmyGroup } from "@/types/def.armygroup.type";
 import { FactionDatasheet } from "@/types/faction.datasheet.type";
 import { FactionDatasheetStatsProvider } from "@/hooks/contexts/FactionDatasheetStatsContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
+import { queryClient, QueryClientProvider } from "@/utils/queries/queryClient";
 
 export const FactionDatasheetCardGrid = ({ datasheets } : Readonly<{ datasheets: FactionDatasheet[] | null }>) => {
     if (!datasheets || datasheets.length === 0) {
-        return (
-            <div>
-                <p>There are no results available.</p>
-            </div>
-        );
+        return <NoResultsMessage />
     }
 
     return (
-        <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {datasheets.map(el => <FactionDatasheetCard key={el.id} data={el} />)}
-        </div>
+        <GenericCardGrid>
+            {_.orderBy(datasheets, ['name'], ['asc']).map(el => <FactionDatasheetCard key={el.id} data={el} />)}
+        </GenericCardGrid>
     );
 };
 
-export const FactionDatasheetCardGroup = ({ factionId, group, datasheets } : Readonly<{ factionId: string, group: DefArmyGroup | null, datasheets: FactionDatasheet[] | null }>) => {
-    const groupModalId = `modal-${group?.id ?? '000'}`;
-    const groupName = group?.name ?? "Uncategorized";
-
-    if (!datasheets || datasheets.length === 0) {
-        return null;
-    }
-
+export const FactionDatasheetCardGridSection = ({ datasheets, factionId, title } : Readonly<{ datasheets: FactionDatasheet[] | null, factionId: string, title: string }>) => {
+    const modalId = React.useId();
     return (
         <QueryClientProvider client={queryClient}>
-            <FactionDatasheetStatsProvider factionId={factionId} modalId={groupModalId}>
-                <section id={`group-${groupName}`}>
-                    <h2>{groupName}</h2>
+            <FactionDatasheetStatsProvider factionId={factionId} modalId={modalId}>
+                <Section>
+                    <SectionTitle>{title}</SectionTitle>
                     <FactionDatasheetCardGrid datasheets={datasheets} />
-                    <FactionDatasheetStatsModal id={groupModalId} />
-                </section>
+                    <FactionDatasheetStatsModal id={modalId} />
+                </Section>
             </FactionDatasheetStatsProvider>
         </QueryClientProvider>
     );
 };
 
-const FactionDatasheetCard = ({ data }: Readonly<{ data: FactionDatasheet }>) => {
+export const FactionDatasheetCard = ({ data }: Readonly<{ data: FactionDatasheet }>) => {
     const { modalId, selectDatasheet } = useFactionDatasheetStats();
 
     const handleClickEvent = (e) => {
@@ -61,9 +55,9 @@ const FactionDatasheetCard = ({ data }: Readonly<{ data: FactionDatasheet }>) =>
     };
 
     return (
-        <div onClick={handleClickEvent} className="flex flex-row border px-2 py-3 cursor-pointer bg-accent text-accent-content">
+        <GridCard onClick={handleClickEvent}>
             {data.name}
-        </div>  
+        </GridCard>
     );
 };
 

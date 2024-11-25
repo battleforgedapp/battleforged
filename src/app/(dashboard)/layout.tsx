@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children } : Readonly<{ children
     return (
         <NavigationDrawer navId={navId}>
             <Header navId={navId} />
-            <main className="px-4 py-2">
+            <main className="mb-3">
                 {children}
             </main>
         </NavigationDrawer>
