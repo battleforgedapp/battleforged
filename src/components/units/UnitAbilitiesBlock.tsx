@@ -46,7 +46,7 @@ Custom title component that shows the block header with the faction background c
 class names across different components. Update once, have it change everywhere!
  */
 export const UnitAbilityDisplayTitle = ({ children }: Readonly<{ children: React.ReactNode }>) => (
-    <h3 className="flex items-center font-bold bg-blue-800 text-white text-sm uppercase max-h-10 p-2.5">
+    <h3 className="flex items-center font-bold bg-accent text-accent-content text-sm uppercase max-h-10 p-2.5">
         {children}
     </h3>
 );
@@ -55,7 +55,7 @@ export const UnitAbilityDisplayTitle = ({ children }: Readonly<{ children: React
 Custom title component that shows the block header with a custom icon all spaced evenly using classes
  */
 export const UnitAbilityDisplayTitleDisplay = ({ icon = null, label }: Readonly<{ icon?: React.ReactNode | null | undefined, label: React.ReactNode | string }>) => {
-    const titleClass = ['uppercase', { "mx-1.5": icon !== null }] as const;
+    const titleClass = ['uppercase', { "mx-1.5": icon !== null }] as any;
     return (
         <UnitAbilityDisplayTitle>
             {icon && (

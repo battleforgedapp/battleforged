@@ -7,7 +7,11 @@ import GenericCardGrid from "@/components/layout/grids/GenericCardGrid";
 import NoResultsMessage from "@/components/messages/NoResultsMessage";
 import Section from "@/components/layout/sections/Section";
 import SectionTitle from "@/components/layout/sections/SectionTitle";
+import FactionDetachmentModal from "@/components/factions/FactionDetachmentModal";
+import useFactionDetachmentData from "@/hooks/useFactionDetachmentData";
 import { FactionDetachment } from "@/types/faction.detachment.type";
+import { FactionDetachmentDataProvider } from "@/hooks/contexts/FactionDetachmentDataContext";
+import { queryClient, QueryClientProvider } from "@/utils/queries/queryClient";
 
 export const FactionDetachmentCardGrid = ({ detachments } : Readonly<{ detachments: FactionDetachment[] | null }>) => {
     if (!detachments || detachments.length === 0) {
@@ -21,16 +25,31 @@ export const FactionDetachmentCardGrid = ({ detachments } : Readonly<{ detachmen
     );
 };
 
-export const FactionDetachmentCardGridSection = ({ detachments, title = "Detachments" } : Readonly<{ detachments: FactionDetachment[] | null, title?: string }>) => (
-    <Section>
-        <SectionTitle>{title}</SectionTitle>
-        <FactionDetachmentCardGrid detachments={detachments} />
-    </Section>
-);
+export const FactionDetachmentCardGridSection = ({ factionId, detachments, title = "Detachments" } : Readonly<{ factionId: string, detachments: FactionDetachment[] | null, title?: string }>) => {
+    const modalId = React.useId();
+    return (
+        <QueryClientProvider client={queryClient}>
+            <FactionDetachmentDataProvider factionId={factionId} modalId={modalId}>
+                <Section>
+                    <SectionTitle>{title}</SectionTitle>
+                    <FactionDetachmentCardGrid detachments={detachments} />
+                    <FactionDetachmentModal id={modalId} />
+                </Section>
+            </FactionDetachmentDataProvider>
+        </QueryClientProvider>
+    );
+};
 
 export const FactionDetachmentCard = ({ data } : Readonly<{ data: FactionDetachment }>) => {
+    const { modalId, selectDetachment } = useFactionDetachmentData();
+
+    const handleClickEvent = (e) => {
+        selectDetachment(data.id);
+        document.getElementById(modalId)?.showModal();
+    };
+
     return (
-        <GridCard>
+        <GridCard onClick={handleClickEvent}>
             {data.name}
         </GridCard>
     );

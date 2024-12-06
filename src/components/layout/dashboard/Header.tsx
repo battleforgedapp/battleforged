@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import HeaderProfileDisplay from "@/components/layout/dashboard/HeaderProfileDisplay";
 
 const Header = ({ navId } : Readonly<{ navId: string }>) => {
@@ -19,7 +20,7 @@ const Header = ({ navId } : Readonly<{ navId: string }>) => {
                 </label>
             </div>
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">Battleforged ⚒️</a>
+                <Link href={"/dashboard"} className="btn btn-ghost text-xl">Battleforged ⚒️</Link>
             </div>
             <div className="flex-none">
                 <HeaderProfileDisplay />

@@ -59,7 +59,7 @@ const Index = async ({ params }) => {
     return (
         <React.Fragment>
             <FactionBanner data={data} />
-            <FactionRuleCardGridSection rules={data?.rules} />
+            <FactionRuleCardGridSection rules={data?.rules} factionId={id} />
             <FactionDetachmentCardGridSection detachments={data?.detachments} />
             <FactionDatasheetGroupLayout datasheets={data?.datasheets} factionId={id} />
         </React.Fragment>

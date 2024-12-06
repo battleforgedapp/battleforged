@@ -32,7 +32,7 @@ export const UnitWeaponsBlockGroup = ({ autoHide, displayType, weapons }: Readon
         <div className="overflow-x-auto">
             <table className="table table-zebra">
                 <thead>
-                    <tr className="bg-blue-800 text-white">
+                    <tr className="bg-accent text-accent-content">
                         <th className="max-w-2 w-2 text-center uppercase">
                             {displayType === WeaponType.range
                                 ? (<RiCrosshair2Fill />)

@@ -14,7 +14,7 @@ const FactionRuleDataLayout = ({ rule } : Readonly<{ rule : FactionRule | null }
 
     return (
         <React.Fragment>
-            <div className="px-5 py-3 bg-blue-800 text-white sticky">
+            <div className="px-5 py-3 bg-primary text-primary-content sticky top-0">
                 <h3 className="font-bold text-xl uppercase mb-1">{rule.name}</h3>
             </div>
             <div className="flex flex-row px-5 py-4">

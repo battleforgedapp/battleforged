@@ -7,7 +7,7 @@ import useFactionRuleData from "@/hooks/useFactionRuleDataContext";
 const FactionRuleModal = ({ id } : Readonly<{ id: string }>) => {
     const { rule } = useFactionRuleData();
     return (
-        <dialog id={id} className="modal modal-bottom">
+        <dialog id={id} className="modal md:modal-bottom">
             <div className="modal-box p-0">
                 <FactionRuleDataLayout rule={rule} />
             </div>

@@ -22,11 +22,11 @@ const FactionDatasheetDataLayout = ({ autoHideEmpty, datasheet }: Readonly<{ aut
 
     return (
         <React.Fragment>
-            <div className="px-5 py-3 bg-blue-800 text-white sticky">
+            <div className="px-5 py-3 bg-primary text-primary-content sticky top-0">
                 <UnitStatsBlockGroup unitName={datasheet.name} stats={datasheet.stats} />
             </div>
             <div className="flex flex-row">
-                <div className="flex flex-col flex-1 md:border-r-2 md:border-blue-800">
+                <div className="flex flex-col flex-1 md:border-r-2 md:border-accent">
                     <UnitWeaponsBlockGroup autoHide={autoHideEmpty ?? false} displayType={WeaponType.range} weapons={datasheet.weapons} />
                     <UnitWeaponsBlockGroup autoHide={autoHideEmpty ?? false} displayType={WeaponType.melee} weapons={datasheet.weapons} />
                     <UnitAbilitiesBlockGroup className="md:hidden" abilities={datasheet.abilities} />
